@@ -3,6 +3,7 @@ using CW_10.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CW_10.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240604210049_Add Account table")]
+    partial class AddAccounttable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,17 +65,6 @@ namespace CW_10.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Accounts");
-
-                    b.HasData(
-                        new
-                        {
-                            AccountId = 1,
-                            AccountEmail = "j@k.com",
-                            AccountFirstName = "Jan",
-                            AccountLastName = "Kowalski",
-                            AccountPhoneNumber = "999888777",
-                            RoleId = 1
-                        });
                 });
 
             modelBuilder.Entity("CW_10.Models.Role", b =>
@@ -93,13 +85,6 @@ namespace CW_10.Migrations
                     b.HasKey("RoleId");
 
                     b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            RoleId = 1,
-                            RoleName = "User"
-                        });
                 });
 
             modelBuilder.Entity("CW_10.Models.Account", b =>
