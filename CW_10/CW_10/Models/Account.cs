@@ -34,5 +34,7 @@ public class Account
     
     public Role Role { get; set; }
     
+    public IEnumerable<ShoppingCart> ShoppingCarts { get; set; }
+    
     
 }
