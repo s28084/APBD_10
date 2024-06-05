@@ -43,7 +43,7 @@ app.MapPost("api/products", async (PostProductResponseModel model, IProductServi
     try
     {
         var product = await productService.PostProductAsync(model, cancellationToken);
-        return Results.Created($"/api/products", product);
+        return Results.Created();
     }
     catch (Exception exc)
     {

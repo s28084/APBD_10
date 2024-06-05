@@ -10,17 +10,11 @@ public interface IProductService
     Task<PostProductResponseModel> PostProductAsync(PostProductResponseModel model, CancellationToken cancellationToken);
 }
 
-public class ProductService : IProductService
+public class ProductService(DatabaseContext context) : IProductService
 {
-    private readonly DatabaseContext _context;
-
-    public ProductService(DatabaseContext context)
-    {
-        _context = context;
-    }
-
     public async Task<PostProductResponseModel> PostProductAsync(PostProductResponseModel model, CancellationToken cancellationToken)
     {
+        
         var product = new Product
         {
             ProductName = model.productName,
@@ -30,23 +24,20 @@ public class ProductService : IProductService
             ProductDepth = model.productDepth
         };
 
-        _context.Products.Add(product);
-        await _context.SaveChangesAsync(cancellationToken);
+        context.Products.Add(product);
+        await context.SaveChangesAsync(cancellationToken);
 
-        foreach (var categoryId in model.productCategories)
+        foreach (var productCategory in model.productCategories.Select(categoryId => new ProductCategory
+                 {
+                     ProductId = product.ProductId,
+                     CategoryId = categoryId
+                 }))
         {
-            var productCategory = new ProductCategory
-            {
-                ProductId = product.ProductId,
-                CategoryId = categoryId
-            };
-
-            _context.ProductsCategories.Add(productCategory);
+            context.ProductsCategories.Add(productCategory);
         }
 
-        await _context.SaveChangesAsync(cancellationToken);
-
-        // Create and return a response model
+        await context.SaveChangesAsync(cancellationToken);
+        
         return new PostProductResponseModel
         {
             productName = product.ProductName,
