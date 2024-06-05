@@ -1,5 +1,6 @@
 using CW_10.Contexts;
 using CW_10.Exceptions;
+using CW_10.ResponseModel;
 using CW_10.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddDbContext<DatabaseContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
@@ -33,6 +35,19 @@ app.MapGet("api/accounts/{id:int}", async (int id, IAccountService service, Canc
     catch (NotFoundException exc)
     {
         return Results.NotFound(exc.Message);
+    }
+});
+
+app.MapPost("api/products", async (PostProductResponseModel model, IProductService productService, CancellationToken cancellationToken) =>
+{
+    try
+    {
+        var product = await productService.PostProductAsync(model, cancellationToken);
+        return Results.Created($"/api/products", product);
+    }
+    catch (Exception exc)
+    {
+        return Results.Problem(exc.Message);
     }
 });
 
