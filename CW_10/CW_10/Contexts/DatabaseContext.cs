@@ -8,6 +8,8 @@ public class DatabaseContext : DbContext
     public DbSet<Role> Roles { get; set; }
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Product> Products { get; set; }
+    public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+    public DbSet<Category> Categories { get; set; }
     protected DatabaseContext()
     {
     }
@@ -53,6 +55,38 @@ public class DatabaseContext : DbContext
                 ProductHeight = 10,
                 ProductDepth = 0.1
             }
+        });
+        
+        modelBuilder.Entity<ShoppingCart>().HasData(new List<ShoppingCart>
+        {
+            new ShoppingCart
+            {
+                ProductId = 1,
+                AccountId = 1,
+                ShoppingCartAmount = 10
+            }
+        });
+        
+        modelBuilder.Entity<Category>().HasData(new List<Category>
+        {
+            new Category
+            {
+                CategoryId = 1,
+                CategoryName = "pierwsza"
+            },
+            
+            new Category
+            {
+                CategoryId = 2,
+                CategoryName = "druga"
+            },
+            
+            new Category
+            {
+                CategoryId = 3,
+                CategoryName = "trzecia"
+            }
+            
         });
         
     }
