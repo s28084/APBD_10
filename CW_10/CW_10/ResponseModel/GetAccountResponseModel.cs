@@ -14,6 +14,6 @@ public class GetAccountResponseModel
     
     public string role { get; set; }
     
-    //public ShoppingCart cart { get; set; }
+    public List<GetShoppingCartResponseModel> cart { get; set; }
     
 }

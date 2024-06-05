@@ -24,7 +24,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("api/accounts/{accountId:int}", async (int id, IAccountService service, CancellationToken cancellationToken) =>
+app.MapGet("api/accounts/{id:int}", async (int id, IAccountService service, CancellationToken cancellationToken) =>
 {
     try
     {

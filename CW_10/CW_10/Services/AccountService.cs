@@ -22,9 +22,15 @@ public class AccountService(DatabaseContext context) : IAccountService
                 lastName = e.AccountLastName,
                 email = e.AccountEmail,
                 phone = e.AccountPhoneNumber,
-                role = e.Role.RoleName
-                //cart = e.ShoppingCarts.Where(sc => sc.AccountId == id).Select(sc => new Get)
-                //Dodać polecenie dla ShoppingCart
+                role = e.Role.RoleName,
+                cart = e.ShoppingCarts
+                    .Where(sc => sc.AccountId == id)
+                    .Select(sc => new GetShoppingCartResponseModel
+                {
+                    productId = sc.ProductId,
+                    productName = sc.Product.ProductName,
+                    amount = sc.ShoppingCartAmount
+            }).ToList()
             }).FirstOrDefaultAsync(cancellationToken);
         if (result is null)
         {
