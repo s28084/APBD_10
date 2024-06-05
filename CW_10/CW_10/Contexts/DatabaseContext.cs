@@ -10,6 +10,7 @@ public class DatabaseContext : DbContext
     public DbSet<Product> Products { get; set; }
     public DbSet<ShoppingCart> ShoppingCarts { get; set; }
     public DbSet<Category> Categories { get; set; }
+    public DbSet<ProductCategory> ProductsCategories { get; set; }
     protected DatabaseContext()
     {
     }
@@ -85,6 +86,28 @@ public class DatabaseContext : DbContext
             {
                 CategoryId = 3,
                 CategoryName = "trzecia"
+            }
+            
+        });
+        
+        modelBuilder.Entity<ProductCategory>().HasData(new List<ProductCategory>
+        {
+            new ProductCategory
+            {
+                ProductId = 1,
+                CategoryId = 1
+            },
+            
+            new ProductCategory
+            {
+            ProductId = 1,
+            CategoryId = 2
+            },
+            
+            new ProductCategory
+            {
+                ProductId = 1,
+                CategoryId = 3
             }
             
         });

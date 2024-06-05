@@ -28,5 +28,7 @@ public class Product
     
     public IEnumerable<ShoppingCart> ShoppingCarts { get; set; }
     
+    public IEnumerable<ProductCategory> ProductCategories { get; set; }
+    
     
 }
